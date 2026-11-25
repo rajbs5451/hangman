@@ -1,19 +1,24 @@
 package helpers
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 func IsLetterInString(letter, word string) bool {
-	// present := false
+	present := false
 	w := strings.ToUpper(word)
 	l := strings.ToUpper(letter)
-	return strings.Contains(w, l)
+	//return strings.Contains(w, l)
 
-	// for _, k := range w {
-	// 	if string(k) == l {
-	// 		present = true
-	// 		break
-	// 	}
+	for i, k := range w {
+		if string(k) == l {
+			present = true
+			fmt.Println(i,k)
+			break
+		}
 
-	// }
-	// return present
+	}
+	
+	return present
 }

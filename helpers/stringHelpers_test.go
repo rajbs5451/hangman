@@ -1,6 +1,9 @@
 package helpers
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 // func TestIsLetterInString(t *testing.T){
 // 	word := "foot"
@@ -14,22 +17,21 @@ import "testing"
 // }
 
 func TestIsLetterInString(t *testing.T) {
-	tests := []struct {
+	test := []struct {
 		word, letter string
 		want         bool
 	}{
-		{"foot", "o", true},
-		{"foot", "z", false},
-		{"foot", "O", true},
-		{"Foot", "f", true},
-		{"hands", "S", true},
+		{"raj", "f", false},
+		{"Sun", "U", true},
+		{"moon", "M", true},
+		{"Rat", "R", true},
 	}
-
-	for _, tc := range tests {
-		got := IsLetterInString(tc.letter, tc.word)
-		if got != tc.want {
-			t.Errorf("Input: %q, Letter: %q \n Got %v, want %v\n", tc.word, tc.letter, got, tc.want)
+	for i, r := range test {
+		A := IsLetterInString(r.letter, r.word)
+		fmt.Println(i, r)
+		if A != r.want {
+			t.Error("ffddd")
 		}
-
 	}
+
 }
