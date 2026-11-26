@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"fmt"
+	"slices"
 	"testing"
 )
 
@@ -26,12 +27,46 @@ func TestIsLetterInString(t *testing.T) {
 		{"moon", "M", true},
 		{"Rat", "R", true},
 	}
-	for i, r := range test {
-		A := IsLetterInString(r.letter, r.word)
-		fmt.Println(i, r)
-		if A != r.want {
-			t.Error("ffddd")
+	for _, tc := range test {
+		got := IsLetterInString(tc.letter, tc.word)
+		if got != tc.want {
+			t.Errorf("Word: %q, letter: %q, expected: %v, got=%v\n", tc.word, tc.letter, tc.want, got)
 		}
 	}
 
+}
+
+func TestIndexOfLetter(t *testing.T) {
+	tests := []struct {
+		word, letter string
+		want         []int
+		err          error
+	}{
+		{"raj", "f", nil, ErrLetterNotFound},
+		{"Sun", "U", []int{1}, nil},
+		{"moon", "O", []int{1, 2}, nil},
+	}
+	for _, tc := range tests {
+		got, err := IndexOfLetterRegex(tc.word, tc.letter)
+		if err == nil && tc.err == ErrLetterNotFound {
+			t.Errorf("Word: %q, letter: %q, expected: error: %v, got=%v\n", tc.word, tc.letter, tc.err.Error(), err)
+		} else if !slices.Equal(got, tc.want) {
+			t.Errorf("Word: %q, letter: %q, expected: %v, got=%v\n", tc.word, tc.letter, tc.want, got)
+		}
+	}
+
+}
+
+func ExampleIndexOfLetter() {
+	pos, err := IndexOfLetter("rajendra", "f")
+	fmt.Println(pos, err.Error())
+	// Output: [] Letter not found in string
+
+}
+func ExampleStringToDashes() {
+	input := "rajendra"
+	// want := "_ _ _ _ _ _ _ _"
+	got := StringToDashes(input)
+	fmt.Println(got)
+	// Output: _ _ _ _ _ _ _ _
 }
